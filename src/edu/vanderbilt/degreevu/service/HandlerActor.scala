@@ -1,6 +1,7 @@
 package edu.vanderbilt.degreevu.service
 
 import android.os.{Looper, Message, Handler}
+import android.content.Context
 
 /**
  * A basic Actor that uses Android's messaging framework.
@@ -44,4 +45,27 @@ object HandlerActor {
       extends Handler(callback)
               with HandlerActor
 
+  trait Server extends Handler.Callback {
+
+    def init(ctx: AppService): Unit
+
+    def handleRequest(req: AnyRef): Unit
+
+    def handleTell(tell: AnyRef): Unit
+
+    var requester: HandlerActor = null
+
+    override def handleMessage(msg: Message): Boolean = {
+      msg.obj match {
+        case AppService.Initialize(ctx) => init(ctx)
+        case (r: HandlerActor, req: AnyRef) =>
+          requester = r
+          handleRequest(req)
+        case a: AnyRef => handleTell(a)
+      }
+      true
+    }
+
+  }
+  
 }

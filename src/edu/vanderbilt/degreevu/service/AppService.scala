@@ -40,4 +40,6 @@ object AppService {
 
   }
 
+  case class Initialize(ctx: AppService)
+
 }
