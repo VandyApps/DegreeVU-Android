@@ -6,11 +6,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.marsupial</groupId>
-    <artifactId>wombat</artifactId>
+    <groupId>edu.vanderbilt</groupId>
+    <artifactId>degreevu</artifactId>
     <packaging>apk</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Wombat</name>
+    <name>DegreeVU</name>
 
     <properties>
         <scala.version>2.10.3</scala.version>

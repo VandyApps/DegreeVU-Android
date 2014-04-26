@@ -1,9 +1,9 @@
-package com.marsupial.wombat
+package edu.vanderbilt.degreevu
 
 import android.app.{Fragment, Activity}
 import android.os.{Message, Handler, Bundle}
 
-import com.marsupial.wombat.service.{HandlerActor, EventHub, AppService}
+import edu.vanderbilt.degreevu.service.{HandlerActor, EventHub, AppService}
 
 /**
  * The starting point of the app. This Activity does not show any UI directly,

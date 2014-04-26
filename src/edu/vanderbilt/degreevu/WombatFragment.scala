@@ -1,10 +1,10 @@
-package com.marsupial.wombat
+package edu.vanderbilt.degreevu
 
 import android.app.Fragment
 import android.view.View
 import android.widget.Button
 
-import com.marsupial.wombat.service.AppService
+import edu.vanderbilt.degreevu.service.AppService
 
 /**
  * Page where you can gaze on a wombat.

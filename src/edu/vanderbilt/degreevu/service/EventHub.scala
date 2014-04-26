@@ -1,4 +1,4 @@
-package com.marsupial.wombat.service
+package edu.vanderbilt.degreevu.service
 
 import scala.collection.mutable
 import scala.ref.WeakReference

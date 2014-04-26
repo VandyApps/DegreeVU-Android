@@ -1,11 +1,11 @@
-package com.marsupial.wombat
+package edu.vanderbilt.degreevu
 
 import android.app.Fragment
 import android.os.{Message, Handler}
 import android.widget.{TextView, Button}
 import android.view.View
 
-import com.marsupial.wombat.service.{HandlerActor, EventHub, AppService}
+import edu.vanderbilt.degreevu.service.{HandlerActor, EventHub, AppService}
 
 /**
  * Shows a skyline of Perth

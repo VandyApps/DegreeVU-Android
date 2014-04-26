@@ -1,11 +1,11 @@
-package com.marsupial.wombat
+package edu.vanderbilt.degreevu
 
 import android.app.Fragment
 import android.view.{LayoutInflater, ViewGroup, View}
 import android.os.Bundle
 
 /**
- * Created by athran on 4/25/14.
+ *
  */
 trait FragmentViewUtil {
   self: Fragment =>

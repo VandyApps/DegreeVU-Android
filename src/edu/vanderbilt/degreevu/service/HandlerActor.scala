@@ -1,4 +1,4 @@
-package com.marsupial.wombat.service
+package edu.vanderbilt.degreevu.service
 
 import android.os.{Looper, Message, Handler}
 
