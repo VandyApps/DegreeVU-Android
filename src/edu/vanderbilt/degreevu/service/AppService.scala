@@ -10,12 +10,11 @@ class AppService extends android.app.Application {
 
   import AppService._
 
-  private val eventHubHandle = HandlerActor.sync(new EventHub)
-  private var serviceHandlers = Seq.empty[HandlerActor]
+  private val eventHubHandle        = HandlerActor.sync(new EventHub)
+  private var serviceHandlers       = Seq.empty[HandlerActor]
 
   override def onCreate() {
     super.onCreate()
-
     val thread = new HandlerThread("backgroundThread")
     thread.start()
 
@@ -30,15 +29,15 @@ class AppService extends android.app.Application {
     serviceHandlers.foreach(_ ! Initialize(this))
   }
 
-  def eventHub: HandlerActor = eventHubHandle
+  def eventHub: HandlerActor                = eventHubHandle
 
-  def courseServer: HandlerActor = serviceHandlers(0)
+  def courseServer: HandlerActor            = serviceHandlers(0)
 
-  def userManager: HandlerActor = serviceHandlers(1)
+  def userManager: HandlerActor             = serviceHandlers(1)
 
-  def majorServer: HandlerActor = serviceHandlers(2)
+  def majorServer: HandlerActor             = serviceHandlers(2)
 
-  def scheduleServer: HandlerActor = serviceHandlers(3)
+  def scheduleServer: HandlerActor          = serviceHandlers(3)
 
 }
 
