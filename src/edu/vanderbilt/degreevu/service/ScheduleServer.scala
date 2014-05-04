@@ -9,7 +9,7 @@ import edu.vanderbilt.degreevu.service.HandlerActor.Server
  */
 object ScheduleServer {
 
-  case object FetchSchedule
+  case object FetchSchedules
 
 }
 

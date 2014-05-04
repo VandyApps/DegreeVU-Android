@@ -20,6 +20,12 @@ object UserManager {
 
   case class PostNewMajor(major: Major)
 
+  case object PostHodAsNewMajor
+
+  case class FlunkOutOfEngineeringSchoolInto(major: Major)
+
+  case object IsUserBlairStudent
+
 }
 
 private[service] class UserManager extends Server {

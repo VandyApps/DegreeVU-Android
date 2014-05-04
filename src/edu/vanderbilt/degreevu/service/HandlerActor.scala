@@ -1,7 +1,6 @@
 package edu.vanderbilt.degreevu.service
 
 import android.os.{Looper, Message, Handler}
-import android.content.Context
 
 /**
  * A basic Actor that uses Android's messaging framework.
@@ -12,8 +11,20 @@ trait HandlerActor extends Handler {
     Message.obtain(this, 0, msg).sendToTarget()
   }
 
+  def tell(msg: AnyRef): Unit = {
+    Message.obtain(this, 0, msg).sendToTarget()
+  }
+
+  def ?(msg: AnyRef)(implicit requester: HandlerActor): Unit = {
+    Message.obtain(this, 0, (requester, msg)).sendToTarget()
+  }
+
   def request(msg: AnyRef)(implicit requester: HandlerActor): Unit = {
-    this ! (requester, msg)
+    Message.obtain(this, 0, (requester, msg)).sendToTarget()
+  }
+
+  def !<<(msgs: Seq[AnyRef]): Unit = {
+    msgs foreach { this ! _ }
   }
 
 }
