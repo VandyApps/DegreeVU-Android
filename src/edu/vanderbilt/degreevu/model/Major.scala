@@ -12,14 +12,14 @@ case class Major(id:   String,
                  code: String)
 
 object Major {
-
-  val KEY_ID = "_id"
+  val KEY_ID   = "_id"
   val KEY_NAME = "majorCode"
   val KEY_CODE = "majorName"
 
   def readFromJson(json: JsonObject): Major = {
-    Major(id   = json.get(KEY_ID).getAsString,
-          name = json.get(KEY_NAME).getAsString,
-          code = json.get(KEY_CODE).getAsString)
+    import edu.vanderbilt.degreevu.util.GsonConversions._
+    Major(id   = json.get(KEY_ID),
+          name = json.get(KEY_NAME),
+          code = json.get(KEY_CODE))
   }
 }

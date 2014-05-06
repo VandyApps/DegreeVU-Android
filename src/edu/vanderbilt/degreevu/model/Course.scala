@@ -29,19 +29,19 @@ case class Course(id:          String,
 }
 
 object Course {
-
-  val KEY_ID = "_id"
+  val KEY_ID   = "_id"
   val KEY_CODE = "courseCode"
   val KEY_NAME = "courseName"
   val KEY_DESC = "courseDescription"
   val KEY_CRED = "courseCredits"
 
   def readFromJson(json: JsonObject): Course = {
-    Course(id          = json.get(KEY_ID)  .getAsString,
-           code        = json.get(KEY_CODE).getAsString,
-           name        = json.get(KEY_NAME).getAsString,
-           description = json.get(KEY_DESC).getAsString,
-           credits     = json.get(KEY_CRED).getAsInt)
+    import edu.vanderbilt.degreevu.util.GsonConversions._
+    Course(id          = json.get(KEY_ID),
+           code        = json.get(KEY_CODE),
+           name        = json.get(KEY_NAME),
+           description = json.get(KEY_DESC),
+           credits     = json.get(KEY_CRED))
   }
 
 }
