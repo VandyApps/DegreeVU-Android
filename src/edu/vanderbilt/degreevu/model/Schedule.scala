@@ -25,7 +25,9 @@ trait Schedule extends ThreadSafety {
   def semesters: Set[Semester]
 
   def coursesIn(semester: Semester): Set[Course]
-  
+
+  def empty(): Unit
+
 }
 
 object Schedule {
@@ -56,6 +58,8 @@ object Schedule {
 
     def allCourses: Set[Course] = courses.toSet
 
+    def hours = courses.map(_.credits).sum
+
   }
 
   trait ThreadSafety {
@@ -84,7 +88,7 @@ object Schedule {
                             courses: Set[Course])
 
   private[Schedule$] class BasicSchedule(var title: String,
-                              val graduationYear: Int)
+                                         val graduationYear: Int)
       extends Schedule
   {
     var _hours = 0
@@ -115,6 +119,11 @@ object Schedule {
 
     def coursesIn(semester: Semester): Option[Set[Course]] = {
       for (record <- records.find(_._1 == semester)) yield record._2.toSet
+    }
+
+    def empty() {
+      records.foreach(_._2.empty)
+      _hours = 0
     }
 
   }
