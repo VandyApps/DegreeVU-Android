@@ -6,7 +6,7 @@ package edu.vanderbilt.degreevu.model
 case class Semester(semType: SemesterType, year: Int)
 {
   override def toString: String = {
-    semType.toString + " " + year
+    semType.name + " " + year
   }
 
   /**
