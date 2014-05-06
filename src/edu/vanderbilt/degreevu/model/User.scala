@@ -12,7 +12,8 @@ case class User(id:             String,
                 lastName:       String,
                 graduationYear: Int,
                 primaryMajor:   Major,
-                lastLogin:      DateTime)
+                lastLogin:      DateTime,
+                isNew:          Boolean)
 {
 
 }

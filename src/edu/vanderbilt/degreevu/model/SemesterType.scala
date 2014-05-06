@@ -5,38 +5,24 @@ package edu.vanderbilt.degreevu.model
  *
  * Created by athran on 4/26/14.
  */
-sealed trait SemesterType {
-
-  def name: String
-
-}
+case class SemesterType(name: String, order: Int)
 
 object SemesterType {
 
-  case object Spring extends SemesterType {
-    def name: String = "Spring"
-  }
+  val SPRING     = SemesterType("Spring", 1)
+  val FALL       = SemesterType("Fall", 5)
+  val SUMMER_ONE = SemesterType("Summer I", 2)
+  val SUMMER_TWO = SemesterType("Summer II", 3)
+  val MAYMESTER  = SemesterType("Maymester", 4)
 
-  case object Fall extends SemesterType {
-    def name: String = "Fall"
-  }
-
-  case object SummerOne extends SemesterType {
-    def name: String = "Summer 1"
-  }
-
-  case object SummerTwo extends SemesterType {
-    def name: String = "Summer 2"
-  }
-
-  case object Maymester extends SemesterType {
-    def name: String = "May"
-  }
-
-  def all: Seq[SemesterType] = List(Spring,
-                                    SummerOne,
-                                    SummerTwo,
-                                    Maymester,
-                                    Fall)
+  /**
+   * Return all SemesterTypes in chronological order.
+   */
+  def all: Seq[SemesterType] = List(
+                                     SPRING,
+                                     SUMMER_ONE,
+                                     SUMMER_TWO,
+                                     MAYMESTER,
+                                     FALL)
 
 }
