@@ -1,17 +1,17 @@
 package edu.vanderbilt.degreevu.service
 
 import android.app.{Activity, Fragment}
-import android.os.HandlerThread
+import android.os.{Handler, HandlerThread}
 
 /**
  * Provide global backend services
  */
-class AppService extends android.app.Application {
+class AppService extends android.app.Application with ActorConversion {
 
   import AppService._
 
-  private val eventHubHandle        = HandlerActor.sync(new EventHub)
-  private var serviceHandlers       = Seq.empty[HandlerActor]
+  private val eventHubHandle        = new Handler(new EventHub)
+  private var serviceHandlers       = Seq.empty[Handler]
 
   override def onCreate() {
     super.onCreate()
@@ -23,21 +23,21 @@ class AppService extends android.app.Application {
            new UserManager,
            new MajorServer,
            new ScheduleServer).
-      map(callback => HandlerActor.async(thread.getLooper,
-                                         callback))
+      map(callback => new Handler(thread.getLooper,
+                                   callback))
 
     serviceHandlers.foreach(_ ! Initialize(this))
   }
 
-  def eventHub: HandlerActor                = eventHubHandle
+  def eventHub: Handler                = eventHubHandle
 
-  def courseServer: HandlerActor            = serviceHandlers(0)
+  def courseServer: Handler            = serviceHandlers(0)
 
-  def userManager: HandlerActor             = serviceHandlers(1)
+  def userManager: Handler             = serviceHandlers(1)
 
-  def majorServer: HandlerActor             = serviceHandlers(2)
+  def majorServer: Handler             = serviceHandlers(2)
 
-  def scheduleServer: HandlerActor          = serviceHandlers(3)
+  def scheduleServer: Handler          = serviceHandlers(3)
 
 }
 

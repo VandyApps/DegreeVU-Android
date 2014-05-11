@@ -2,7 +2,6 @@ package edu.vanderbilt.degreevu.service
 
 import android.os.{Message, Handler}
 import android.app.{Activity, Fragment}
-import android.content.Context
 
 /**
  * A basic Actor that uses Android's messaging framework.
@@ -101,7 +100,7 @@ trait ChattyActivity extends Activity with ActorConversion {
 
 abstract class Server extends Handler.Callback {
 
-  def init(ctx: Context): Unit
+  def init(ctx: AppService): Unit
 
   def handleRequest(req: AnyRef): Unit
 

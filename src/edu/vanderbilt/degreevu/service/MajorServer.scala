@@ -1,7 +1,5 @@
 package edu.vanderbilt.degreevu.service
 
-import edu.vanderbilt.degreevu.service.HandlerActor.Server
-
 /**
  * Fetches Major data
  *

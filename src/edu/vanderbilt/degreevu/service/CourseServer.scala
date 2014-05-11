@@ -1,6 +1,5 @@
 package edu.vanderbilt.degreevu.service
 
-import edu.vanderbilt.degreevu.service.HandlerActor.Server
 import edu.vanderbilt.degreevu.model.Course
 
 /**

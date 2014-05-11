@@ -3,7 +3,7 @@ package edu.vanderbilt.degreevu
 import android.app.{Fragment, Activity}
 import android.os.{Message, Handler, Bundle}
 
-import edu.vanderbilt.degreevu.service.{HandlerActor, EventHub, AppService}
+import edu.vanderbilt.degreevu.service.{ActorConversion, EventHub, AppService}
 
 /**
  * The starting point of the app. This Activity does not show any UI directly,
@@ -12,9 +12,10 @@ import edu.vanderbilt.degreevu.service.{HandlerActor, EventHub, AppService}
  */
 class MainActivity extends Activity
                            with AppService.ActivityInjection
-                           with Handler.Callback {
-
-  private val bridge = HandlerActor.sync(this)
+                           with Handler.Callback
+                           with ActorConversion
+{
+  private val bridge = new Handler(this)
   private var startTime = -1L
 
   override def onCreate(saved: Bundle) {
