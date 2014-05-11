@@ -3,7 +3,7 @@ package edu.vanderbilt.degreevu
 import android.app.{Fragment, Activity}
 import android.os.{Message, Handler, Bundle}
 
-import edu.vanderbilt.degreevu.service.{ActorConversion, EventHub, AppService}
+import edu.vanderbilt.degreevu.service.{ChattyActivity, ActorConversion, AppService}
 
 /**
  * The starting point of the app. This Activity does not show any UI directly,
@@ -12,26 +12,16 @@ import edu.vanderbilt.degreevu.service.{ActorConversion, EventHub, AppService}
  */
 class MainActivity extends Activity
                            with AppService.ActivityInjection
+                           with ChattyActivity
                            with Handler.Callback
                            with ActorConversion
 {
-  private val bridge = new Handler(this)
   private var startTime = -1L
 
   override def onCreate(saved: Bundle) {
     super.onCreate(saved)
     setContentView(R.layout.main)
     addFragment(new PerthFragment)
-  }
-
-  override def onStart() {
-    super.onStart()
-    app.eventHub ! EventHub.Subscribe(bridge)
-  }
-
-  override def onStop() {
-    super.onStop()
-    app.eventHub ! EventHub.Unsubscribe(bridge)
   }
 
   override def handleMessage(msg: Message): Boolean = {
@@ -44,7 +34,7 @@ class MainActivity extends Activity
         if (startTime == -1L) {
           app.eventHub ! PerthFragment.Clean
         } else {
-          app.eventHub ! PerthFragment.WombatLover("You spied a wombat for " + startTime + " seconds")
+          app.eventHub ! PerthFragment.WombatLover(s"You spied a wombat for $startTime seconds")
         }
 
       case WombatFragment.DoneWatchingWombat =>

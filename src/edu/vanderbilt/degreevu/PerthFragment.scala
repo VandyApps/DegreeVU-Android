@@ -5,21 +5,20 @@ import android.os.{Message, Handler}
 import android.widget.{TextView, Button}
 import android.view.View
 
-import edu.vanderbilt.degreevu.service._
+import edu.vanderbilt.degreevu.service.{ActorConversion, Helpers, ChattyFragment, AppService}
 
 /**
  * Shows a skyline of Perth
  */
 class PerthFragment extends Fragment
                             with AppService.FragmentInjection
+                            with ChattyFragment
                             with Helpers.EasyFragment
                             with ActorConversion
                             with View.OnClickListener
-                            with Handler.Callback {
-
+                            with Handler.Callback
+{
   import PerthFragment._
-
-  private val bridge = new Handler(this)
 
   private def btnSwitch = component[Button](R.id.button)
   private def textStatus = component[TextView](R.id.textView)
@@ -28,14 +27,8 @@ class PerthFragment extends Fragment
 
   override def onStart() {
     super.onStart()
-    app.eventHub ! EventHub.Subscribe(bridge)
     btnSwitch.setOnClickListener(this)
     app.eventHub ! BroadcastStatus
-  }
-
-  override def onStop() {
-    super.onStop()
-    app.eventHub ! EventHub.Unsubscribe(bridge)
   }
 
   override def handleMessage(msg: Message): Boolean = {

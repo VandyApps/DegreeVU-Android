@@ -13,8 +13,8 @@ class WombatFragment extends Fragment
                              with AppService.FragmentInjection
                              with Helpers.EasyFragment
                              with ActorConversion
-                             with View.OnClickListener {
-
+                             with View.OnClickListener
+{
   import WombatFragment._
 
   private def btnBack = component[Button](R.id.button)
