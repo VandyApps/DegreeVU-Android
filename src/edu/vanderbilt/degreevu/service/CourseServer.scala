@@ -1,6 +1,7 @@
 package edu.vanderbilt.degreevu.service
 
 import edu.vanderbilt.degreevu.model.Course
+import edu.vanderbilt.degreevu.framework.Server
 
 /**
  * Created by athran on 4/26/14.

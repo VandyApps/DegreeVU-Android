@@ -5,16 +5,16 @@ import android.os.{Message, Handler}
 import android.widget.{TextView, Button}
 import android.view.View
 
-import edu.vanderbilt.degreevu.service.{ActorConversion, Helpers, ChattyFragment, AppService}
+import edu.vanderbilt.degreevu.service.AppService
+import edu.vanderbilt.degreevu.framework.{Helpers, ChattyFragment, FragmentInjection}
 
 /**
  * Shows a skyline of Perth
  */
 class PerthFragment extends Fragment
-                            with AppService.FragmentInjection
+                            with FragmentInjection[AppService]
                             with ChattyFragment
                             with Helpers.EasyFragment
-                            with ActorConversion
                             with View.OnClickListener
                             with Handler.Callback
 {

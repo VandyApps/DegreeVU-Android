@@ -1,6 +1,7 @@
 package edu.vanderbilt.degreevu.service
 
 import edu.vanderbilt.degreevu.model.Major
+import edu.vanderbilt.degreevu.framework.Server
 
 /**
  * Manages User state, logins, updates

@@ -4,15 +4,16 @@ import android.app.Fragment
 import android.view.View
 import android.widget.Button
 
-import edu.vanderbilt.degreevu.service.{ActorConversion, Helpers, AppService}
+import edu.vanderbilt.degreevu.service.AppService
+import edu.vanderbilt.degreevu.framework.{ActorConversion, FragmentInjection, Helpers}
 
 /**
  * Page where you can gaze on a wombat.
  */
 class WombatFragment extends Fragment
-                             with AppService.FragmentInjection
-                             with Helpers.EasyFragment
+                             with FragmentInjection[AppService]
                              with ActorConversion
+                             with Helpers.EasyFragment
                              with View.OnClickListener
 {
   import WombatFragment._

@@ -1,4 +1,4 @@
-package edu.vanderbilt.degreevu.service
+package edu.vanderbilt.degreevu.framework
 
 import android.os.{Message, Handler}
 import android.app.{Activity, Fragment}
@@ -41,7 +41,7 @@ class ActorShell(h: Handler) extends HandlerActor {
  * Mixin to provide the Erlang-inspired Actor DSL to Android's Handler.
  *
  * Mix this trait into a class, or extends the ChattyFragment/ChattyActivity
- * trait for a more complete package.
+ * or Server traits for a more complete package.
  */
 trait ActorConversion {
   implicit def handlerToActor(h: Handler): HandlerActor = new ActorShell(h)
@@ -56,63 +56,102 @@ trait ActorConversion {
  * as well as the `ActorConversion` mixin
  *
  * The Fragment that wants to mix this trait in must implement Handler.Callback
- * to handle incoming messages, and AppService.FragmentInjection for access
- * to the Global EventHub
+ * to handle incoming messages, and FragmentInjection for access to the EventHub.
  *
  * Created by athran on 5/8/14.
  */
-trait ChattyFragment extends Fragment with ActorConversion {
-  self: Handler.Callback with AppService.FragmentInjection =>
+trait ChattyFragment extends Fragment
+                             with ActorConversion
+{
+  self: Handler.Callback with FragmentInjection[_ <:EventfulApp] =>
 
   implicit lazy val communicator = new Handler(this)
 
   override def onStart() {
     super.onStart()
-    app.eventHub ! EventHub.Subscribe(communicator)
+    app.eventHub request EventHub.Subscribe
   }
 
   override def onStop() {
     super.onStop()
-    app.eventHub ! EventHub.Unsubscribe(communicator)
+    app.eventHub request EventHub.Unsubscribe
   }
 
 }
 
 /**
- * Same as ChattyFrag, but for Activity.
+ * Same as ChattyFragment, but for Activity.
  */
-trait ChattyActivity extends Activity with ActorConversion {
-  self: Handler.Callback with AppService.ActivityInjection =>
+trait ChattyActivity extends Activity
+                             with ActorConversion
+{
+  self: Handler.Callback with ActivityInjection[_ <:EventfulApp] =>
 
   implicit lazy val communicator = new Handler(this)
 
   override def onStart() {
     super.onStart()
-    app.eventHub ! EventHub.Subscribe(communicator)
+    app.eventHub request EventHub.Subscribe
   }
 
   override def onStop() {
     super.onStop()
-    app.eventHub ! EventHub.Unsubscribe(communicator)
+    app.eventHub request EventHub.Unsubscribe
   }
 
 }
 
-abstract class Server extends Handler.Callback {
-
-  def init(ctx: AppService): Unit
-
+/**
+ * Template for backend service. Not the same thing as android.app.Service,
+ * although the class that extends this trait could also extend Service because
+ * the async mode of communication through Handlers is the same.
+ */
+trait Server extends Handler.Callback
+                     with DefaultNullProvider
+                     with ActorConversion
+{
+  /**
+   * Override this to handle requests.
+   */
   def handleRequest(req: AnyRef): Unit
 
-  var requester: HandlerActor = null
+  /**
+   * The sender of the request.
+   */
+  var requester: Handler = null
 
   override def handleMessage(msg: Message): Boolean = {
     msg.obj match {
-      case AppService.Initialize(ctx) => init(ctx)
-      case (r: HandlerActor, req: AnyRef) =>
+      case (r: Handler, req: AnyRef) =>
         requester = r
         handleRequest(req)
+      case a: AnyRef =>
+        requester = nullHandler
+        handleRequest(a)
     }
     true
   }
+}
+
+/**
+ * Similar to the DeadLetterOffice in Akka.
+ */
+trait NullProvider {
+
+  def nullHandler: Handler
+
+}
+
+trait DefaultNullProvider extends NullProvider {
+
+  override def nullHandler = SimpleNullHandler
+
+}
+
+private object SimpleNullHandler extends Handler {
+
+  override def handleMessage(msg: Message) {
+    /* Do Nothing */
+  }
+
 }

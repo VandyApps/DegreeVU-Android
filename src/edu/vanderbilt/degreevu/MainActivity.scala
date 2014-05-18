@@ -3,7 +3,8 @@ package edu.vanderbilt.degreevu
 import android.app.{Fragment, Activity}
 import android.os.{Message, Handler, Bundle}
 
-import edu.vanderbilt.degreevu.service.{ChattyActivity, ActorConversion, AppService}
+import edu.vanderbilt.degreevu.service.AppService
+import edu.vanderbilt.degreevu.framework.{ActivityInjection, ChattyActivity}
 
 /**
  * The starting point of the app. This Activity does not show any UI directly,
@@ -11,10 +12,9 @@ import edu.vanderbilt.degreevu.service.{ChattyActivity, ActorConversion, AppServ
  * transition between Fragments.
  */
 class MainActivity extends Activity
-                           with AppService.ActivityInjection
+                           with ActivityInjection[AppService]
                            with ChattyActivity
                            with Handler.Callback
-                           with ActorConversion
 {
   private var startTime = -1L
 
