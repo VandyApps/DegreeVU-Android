@@ -30,15 +30,7 @@ object CourseServer {
 
 private[service] class CourseServer extends Server {
 
-  def init(ctx: AppService): Unit = {
-
-  }
-
-  def handleRequest(req: AnyRef): Unit = {
-
-  }
-
-  def handleTell(tell: AnyRef): Unit = {
+  override def handleRequest(req: AnyRef): Unit = {
 
   }
 

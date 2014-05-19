@@ -30,15 +30,7 @@ object UserManager {
 
 private[service] class UserManager extends Server {
 
-  def init(ctx: AppService): Unit = {
-
-  }
-
-  def handleRequest(req: AnyRef): Unit = {
-
-  }
-
-  def handleTell(tell: AnyRef): Unit = {
+  override def handleRequest(req: AnyRef): Unit = {
 
   }
 
